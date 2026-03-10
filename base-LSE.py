@@ -1,7 +1,6 @@
 # ===========================================
 # By: Nury Farelo - Estructuras Datos
-# Name: Lista Simplemente Enlazada
-# Operaciones implementadas individualmente
+# Name: Lista Simplemente Enlazada 
 # ===========================================
 
 # Clase Nodo
@@ -10,23 +9,31 @@ class Nodo:
         self.data = data
         self.siguiente = None
 
-# Clase Lista Enlazada Simple
+# Clase Lista enlazada simple
 class ListaSE:
     def __init__(self):
         self.cabeza = None
 
-    # -----------------------------------------------
-    # Lista Vacía
-    # -----------------------------------------------
+    # Lista Vacia
     def vacio(self):
-        if self.cabeza is None:
-            print("Está vacía")
+        if self.cabeza == None:
+            print("Está vacia")
         else:
-            print("Lista no vacía")
+            print("Lista no vacia")
 
-    # -----------------------------------------------
+    # Mostrar lista
+    def mostrar(self):
+        if self.cabeza is None:
+            print("Lista vacía")
+            return
+        actual = self.cabeza
+        elementos = []
+        while actual is not None:
+            elementos.append(str(actual.data))
+            actual = actual.siguiente
+        print(" -> ".join(elementos))
+
     # Agregar al inicio
-    # -----------------------------------------------
     def agregarInicio(self, data):
         nuevo_nodo = Nodo(data)
         if self.cabeza is None:
@@ -36,10 +43,8 @@ class ListaSE:
             nuevo_nodo.siguiente = self.cabeza
             self.cabeza = nuevo_nodo
 
-    # -----------------------------------------------
-    # 1. Insertar al final
-    # -----------------------------------------------
-    def insertarFinal(self, data):
+    # ✅ Insertar al final
+    def agregarFinal(self, data):
         nuevo_nodo = Nodo(data)
         if self.cabeza is None:
             self.cabeza = nuevo_nodo
@@ -49,19 +54,18 @@ class ListaSE:
             actual = actual.siguiente
         actual.siguiente = nuevo_nodo
 
-    # -----------------------------------------------
-    # 2. Insertar antes de un elemento X
-    # -----------------------------------------------
+    # ✅ Insertar antes de un elemento X
     def insertarAntes(self, x, data):
         if self.cabeza is None:
-            print("La lista está vacía.")
+            print("Lista vacía")
             return
-        # Caso especial: el elemento X es la cabeza
+        # Si el elemento X es la cabeza
         if self.cabeza.data == x:
             nuevo_nodo = Nodo(data)
             nuevo_nodo.siguiente = self.cabeza
             self.cabeza = nuevo_nodo
             return
+        # Recorrer hasta encontrar el nodo anterior a X
         actual = self.cabeza
         while actual.siguiente is not None:
             if actual.siguiente.data == x:
@@ -70,14 +74,12 @@ class ListaSE:
                 actual.siguiente = nuevo_nodo
                 return
             actual = actual.siguiente
-        print(f"Elemento {x} no encontrado en la lista.")
+        print(f"El elemento {x} no fue encontrado")
 
-    # -----------------------------------------------
-    # 3. Insertar después de un elemento X
-    # -----------------------------------------------
+    # ✅ Insertar después de un elemento X
     def insertarDespues(self, x, data):
         if self.cabeza is None:
-            print("La lista está vacía.")
+            print("Lista vacía")
             return
         actual = self.cabeza
         while actual is not None:
@@ -87,127 +89,95 @@ class ListaSE:
                 actual.siguiente = nuevo_nodo
                 return
             actual = actual.siguiente
-        print(f"Elemento {x} no encontrado en la lista.")
+        print(f"El elemento {x} no fue encontrado")
 
-    # -----------------------------------------------
-    # 4. Eliminar el primero
-    # -----------------------------------------------
+    # ✅ Eliminar el primero
     def eliminarPrimero(self):
         if self.cabeza is None:
-            print("La lista está vacía, no hay nada que eliminar.")
+            print("Lista vacía")
             return
         eliminado = self.cabeza.data
         self.cabeza = self.cabeza.siguiente
-        print(f"Elemento eliminado: {eliminado}")
+        print(f"Elemento {eliminado} eliminado")
 
-    # -----------------------------------------------
-    # 5. Eliminar el último
-    # -----------------------------------------------
+    # ✅ Eliminar el último
     def eliminarUltimo(self):
         if self.cabeza is None:
-            print("La lista está vacía, no hay nada que eliminar.")
+            print("Lista vacía")
             return
-        # Caso especial: solo hay un nodo
+        # Si solo hay un elemento
         if self.cabeza.siguiente is None:
             eliminado = self.cabeza.data
             self.cabeza = None
-            print(f"Elemento eliminado: {eliminado}")
+            print(f"Elemento {eliminado} eliminado")
             return
+        # Recorrer hasta el penúltimo nodo
         actual = self.cabeza
         while actual.siguiente.siguiente is not None:
             actual = actual.siguiente
         eliminado = actual.siguiente.data
         actual.siguiente = None
-        print(f"Elemento eliminado: {eliminado}")
+        print(f"Elemento {eliminado} eliminado")
 
-    # -----------------------------------------------
-    # 6. Buscar un elemento por su valor (True/False)
-    # -----------------------------------------------
-    def buscar(self, valor):
+    # ✅ Buscar elemento por su valor (devuelve True o False)
+    def buscarElemento(self, valor):
+        if self.cabeza is None:
+            print("Lista vacía")
+            return False
         actual = self.cabeza
         while actual is not None:
             if actual.data == valor:
-                print(f"Buscar '{valor}': Verdadero")
+                print(f"Elemento {valor} encontrado: Verdadero")
                 return True
             actual = actual.siguiente
-        print(f"Buscar '{valor}': Falso")
+        print(f"Elemento {valor} encontrado: Falso")
         return False
 
-    # -----------------------------------------------
-    # 7. Contar cuántos elementos tiene la lista
-    # -----------------------------------------------
-    def contar(self):
+    # ✅ Contar cuántos elementos tiene la lista
+    def contarElementos(self):
         contador = 0
         actual = self.cabeza
         while actual is not None:
             contador += 1
             actual = actual.siguiente
-        print(f"La lista tiene {contador} elemento(s).")
+        print(f"La lista tiene {contador} elemento(s)")
         return contador
-
-    # -----------------------------------------------
-    # Mostrar la lista
-    # -----------------------------------------------
-    def mostrar(self):
-        if self.cabeza is None:
-            print("Lista: []")
-            return
-        elementos = []
-        actual = self.cabeza
-        while actual is not None:
-            elementos.append(str(actual.data))
-            actual = actual.siguiente
-        print("Lista: " + " -> ".join(elementos))
 
 
 # ===========================================
 # PRUEBAS
 # ===========================================
-if __name__ == "__main__":
-    lista = ListaSE()
+lista = ListaSE()
 
-    print("=" * 45)
-    print("PRUEBA: Insertar al inicio")
-    lista.agregarInicio(30)
-    lista.agregarInicio(20)
-    lista.agregarInicio(10)
-    lista.mostrar()  # 10 -> 20 -> 30
+print("=== Agregar elementos ===")
+lista.agregarFinal(10)
+lista.agregarFinal(20)
+lista.agregarFinal(30)
+lista.mostrar()                          # 10 -> 20 -> 30
 
-    print("\n" + "=" * 45)
-    print("PRUEBA: Insertar al final")
-    lista.insertarFinal(40)
-    lista.insertarFinal(50)
-    lista.mostrar()  # 10 -> 20 -> 30 -> 40 -> 50
+print("\n=== Insertar al final ===")
+lista.agregarFinal(40)
+lista.mostrar()                          # 10 -> 20 -> 30 -> 40
 
-    print("\n" + "=" * 45)
-    print("PRUEBA: Insertar antes del elemento 30")
-    lista.insertarAntes(30, 25)
-    lista.mostrar()  # 10 -> 20 -> 25 -> 30 -> 40 -> 50
+print("\n=== Insertar antes de 20 ===")
+lista.insertarAntes(20, 15)
+lista.mostrar()                          # 10 -> 15 -> 20 -> 30 -> 40
 
-    print("\n" + "=" * 45)
-    print("PRUEBA: Insertar después del elemento 30")
-    lista.insertarDespues(30, 35)
-    lista.mostrar()  # 10 -> 20 -> 25 -> 30 -> 35 -> 40 -> 50
+print("\n=== Insertar después de 20 ===")
+lista.insertarDespues(20, 25)
+lista.mostrar()                          # 10 -> 15 -> 20 -> 25 -> 30 -> 40
 
-    print("\n" + "=" * 45)
-    print("PRUEBA: Eliminar el primero")
-    lista.eliminarPrimero()
-    lista.mostrar()  # 20 -> 25 -> 30 -> 35 -> 40 -> 50
+print("\n=== Eliminar el primero ===")
+lista.eliminarPrimero()
+lista.mostrar()                          # 15 -> 20 -> 25 -> 30 -> 40
 
-    print("\n" + "=" * 45)
-    print("PRUEBA: Eliminar el último")
-    lista.eliminarUltimo()
-    lista.mostrar()  # 20 -> 25 -> 30 -> 35 -> 40
+print("\n=== Eliminar el último ===")
+lista.eliminarUltimo()
+lista.mostrar()                          # 15 -> 20 -> 25 -> 30
 
-    print("\n" + "=" * 45)
-    print("PRUEBA: Buscar elementos")
-    lista.buscar(30)   # Verdadero
-    lista.buscar(99)   # Falso
+print("\n=== Buscar elementos ===")
+lista.buscarElemento(25)                 # Verdadero
+lista.buscarElemento(99)                 # Falso
 
-    print("\n" + "=" * 45)
-    print("PRUEBA: Contar elementos")
-    lista.contar()     # 5 elementos
-
-    print("\n" + "=" * 45)
-    print("Estado final de la lista:")
-    lista.mostrar()
+print("\n=== Contar elementos ===")
+lista.contarElementos()                  # 4
